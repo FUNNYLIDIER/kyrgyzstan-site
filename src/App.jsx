@@ -311,7 +311,7 @@ export default function KyrgyzstanRegionsSite() {
       ]
     },
     {
-      name: 'Джалал-Абадская область',
+      name: 'Манас (Джалал-Абадская обл.)',
       oblast: 'Юго-запад Кыргызстана',
       population: '≈ 1.3 млн',
       area: '33 700 км²',

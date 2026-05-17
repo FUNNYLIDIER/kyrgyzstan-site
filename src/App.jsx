@@ -2,94 +2,59 @@ import React from 'react';
 
 export default function KyrgyzstanRegionsSite() {
   const [selectedRegion, setSelectedRegion] = React.useState(null);
-  const [selectedDistrict, setSelectedDistrict] = React.useState(null);
+  const [selectedDistrictIdx, setSelectedDistrictIdx] = React.useState(null);
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [bishkekOpen, setBishkekOpen] = React.useState(false);
+  const [bishkekDistrictIdx, setBishkekDistrictIdx] = React.useState(null);
+
+  const bishkek = {
+    name: 'Бишкек',
+    status: 'Столица · Город республиканского значения',
+    population: '≈ 1,1 млн',
+    area: '127 км²',
+    founded: '1825 г.',
+    description: 'Бишкек — столица и крупнейший город Кыргызстана. Политический, экономический, научный и культурный центр страны. Расположен у подножия хребта Кюнгёй-Ала-Тоо на высоте около 800 м над уровнем моря. Основан в 1825 году как кокандская крепость, с 1926 по 1991 год назывался Фрунзе. Районы Бишкека не входят в состав 40 официальных районов Кыргызстана.',
+    districts: [
+      {
+        name: 'Ленинский район',
+        population: '≈ 256 тыс.',
+        area: '36 км²',
+        info: 'Один из крупнейших районов Бишкека. Здесь расположены крупные жилые массивы, торговые центры «Бета Сторес», «ГУМ» и важные учреждения. На территории района находятся несколько вузов, парки отдыха и рынки. Активно застраивается новыми жилыми комплексами.',
+        landmarks: ['ТРЦ Бета Сторес', 'Рынок Ортосайский', 'Парк Ататюрка'],
+        economy: 'Торговля, услуги, жилищное строительство'
+      },
+      {
+        name: 'Октябрьский район',
+        population: '≈ 218 тыс.',
+        area: '28 км²',
+        info: 'Современный район Бишкека, активно развивающийся с точки зрения жилой недвижимости. Здесь расположены многие государственные учреждения, посольства и дипломатические миссии иностранных государств. Район известен проспектом Манаса и красивыми зелёными аллеями.',
+        landmarks: ['Посольский квартал', 'Проспект Манаса', 'Ботанический сад'],
+        economy: 'Государственное управление, дипломатия, сфера услуг'
+      },
+      {
+        name: 'Первомайский район',
+        population: '≈ 207 тыс.',
+        area: '30 км²',
+        info: 'Центральная часть столицы с большим числом административных и правительственных зданий. Здесь находится площадь Ала-Тоо — главная площадь страны с монументом «Эркиндик». Сосредоточены банки, министерства, Жогорку Кенеш (парламент) и центральные музеи.',
+        landmarks: ['Площадь Ала-Тоо', 'Жогорку Кенеш', 'Исторический музей', 'Дом правительства'],
+        economy: 'Государственное управление, финансы, культура'
+      },
+      {
+        name: 'Свердловский район',
+        population: '≈ 233 тыс.',
+        area: '33 км²',
+        info: 'Район с развитой промышленной и жилой инфраструктурой. Здесь расположены крупные рынки — «Дордой» и «Мадина», являющиеся одними из крупнейших торговых площадок Центральной Азии. Рядом находится международный аэропорт «Манас».',
+        landmarks: ['Рынок Дордой', 'Рынок Мадина', 'Аэропорт «Манас»'],
+        economy: 'Торговля, промышленность, транспорт'
+      }
+    ]
+  };
 
   const regions = [
     {
-      name: 'Бишкек',
-      oblast: 'Город республиканского значения',
-      population: '≈ 1.1 млн',
-      area: '127 км²',
-      center: 'Бишкек',
-      description: 'Столица и крупнейший город Кыргызстана. Политический, экономический и культурный центр страны.',
-      color: 'from-blue-500 to-cyan-400',
-      emoji: '🏙️',
-      districts: [
-        {
-          name: 'Ленинский район',
-          population: '≈ 256 тыс',
-          area: '36 км²',
-          info: 'Один из крупнейших районов Бишкека. Здесь расположены крупные жилые массивы, торговые центры «Бета Сторес», «ГУМ» и важные учреждения. На территории района находятся несколько вузов, парки отдыха и рынки. Активно застраивается новыми жилыми комплексами.',
-          landmarks: ['ТРЦ Бета Сторес', 'Рынок Ортосайский', 'Парк Ататюрка'],
-          economy: 'Торговля, услуги, жилищное строительство'
-        },
-        {
-          name: 'Октябрьский район',
-          population: '≈ 218 тыс',
-          area: '28 км²',
-          info: 'Современный район Бишкека, активно развивающийся с точки зрения жилой недвижимости. Здесь расположены многие государственные учреждения, посольства и дипломатические миссии. Район известен проспектом Манаса и красивыми аллеями.',
-          landmarks: ['Посольский квартал', 'Проспект Манаса', 'Ботанический сад'],
-          economy: 'Государственное управление, дипломатия, сфера услуг'
-        },
-        {
-          name: 'Первомайский район',
-          population: '≈ 207 тыс',
-          area: '30 км²',
-          info: 'Центральная часть столицы с большим числом административных и правительственных зданий. Здесь находится площадь Ала-Тоо — главная площадь страны с монументом «Эркиндик». Сосредоточены банки, министерства, Жогорку Кенеш (парламент) и центральные музеи.',
-          landmarks: ['Площадь Ала-Тоо', 'Жогорку Кенеш', 'Исторический музей', 'Дом правительства'],
-          economy: 'Государственное управление, финансы, культура'
-        },
-        {
-          name: 'Свердловский район',
-          population: '≈ 233 тыс',
-          area: '33 км²',
-          info: 'Район с развитой промышленной и жилой инфраструктурой. Здесь расположены крупные рынки — «Дордой» и «Мадина», являющиеся одними из крупнейших торговых площадок Центральной Азии. Также находится международный аэропорт «Манас».',
-          landmarks: ['Рынок Дордой', 'Рынок Мадина', 'Аэропорт Манас'],
-          economy: 'Торговля, промышленность, транспорт'
-        }
-      ]
-    },
-    {
-      name: 'Ош',
-      oblast: 'Город республиканского значения',
-      population: '≈ 350 тыс',
-      area: '182 км²',
-      center: 'Ош',
-      description: 'Второй по величине город страны, один из древнейших городов Центральной Азии. «Южная столица» Кыргызстана.',
-      color: 'from-red-500 to-orange-400',
-      emoji: '🕌',
-      districts: [
-        {
-          name: 'Ак-Бууринский район',
-          population: '≈ 120 тыс',
-          area: '52 км²',
-          info: 'Северная часть города Ош. На территории района расположены промышленные предприятия и новые жилые кварталы. Район активно развивается — здесь строятся современные микрорайоны и торговые объекты.',
-          landmarks: ['Ошский международный аэропорт', 'Промышленная зона севера'],
-          economy: 'Промышленность, транспорт, строительство'
-        },
-        {
-          name: 'Масаринский район',
-          population: '≈ 110 тыс',
-          area: '40 км²',
-          info: 'Центральная часть города Ош. Здесь расположен знаменитый Ошский базар — один из крупнейших рынков Центральной Азии, а также гора Сулайман-Тоо, внесённая в список объектов Всемирного наследия ЮНЕСКО.',
-          landmarks: ['Гора Сулайман-Тоо (ЮНЕСКО)', 'Ошский базар', 'Мечеть Рабат-Абдулла-Хана'],
-          economy: 'Торговля, туризм, религиозный туризм'
-        },
-        {
-          name: 'Он-Адыр район',
-          population: '≈ 120 тыс',
-          area: '90 км²',
-          info: 'Южная и западная часть города Ош. Район включает пригородные территории с частным сектором и садово-огородными участками. Является воротами в Ферганскую долину.',
-          landmarks: ['Парк Победы', 'Ошский краеведческий музей'],
-          economy: 'Сельское хозяйство, торговля, строительство'
-        }
-      ]
-    },
-    {
       name: 'Чуйская область',
       oblast: 'Север Кыргызстана',
-      population: '≈ 1 млн',
+      population: '≈ 984,6 тыс.',
       area: '20 212 км²',
       center: 'Токмок',
       description: 'Экономически наиболее развитый регион страны с плодородными землями. Основная аграрная и промышленная база Кыргызстана.',
@@ -105,7 +70,7 @@ export default function KyrgyzstanRegionsSite() {
           economy: 'Сельское хозяйство, строительство, торговля'
         },
         {
-          name: 'Жайылский район',
+          name: 'Жайыльский район',
           population: '≈ 125 тыс',
           area: '2 819 км²',
           info: 'Промышленный и сельскохозяйственный район на западе Чуйской долины. Административный центр — город Кара-Балта, известный заводом по переработке урана и золота. В районе развиты зерноводство, свекловодство и животноводство.',
@@ -165,7 +130,7 @@ export default function KyrgyzstanRegionsSite() {
     {
       name: 'Иссык-Кульская область',
       oblast: 'Восток Кыргызстана',
-      population: '≈ 500 тыс',
+      population: '≈ 554,7 тыс.',
       area: '43 144 км²',
       center: 'Каракол',
       description: 'Жемчужина Кыргызстана — регион вокруг высокогорного озера Иссык-Куль, одного из крупнейших горных озёр мира. Главный туристический центр страны.',
@@ -217,7 +182,7 @@ export default function KyrgyzstanRegionsSite() {
     {
       name: 'Нарынская область',
       oblast: 'Центральный Кыргызстан',
-      population: '≈ 300 тыс',
+      population: '≈ 316,5 тыс.',
       area: '45 200 км²',
       center: 'Нарын',
       description: 'Самый высокогорный и суровый регион Кыргызстана. Дух настоящей кочевой культуры, юрты на альпийских джайлоо и дикая природа Тянь-Шаня.',
@@ -269,7 +234,7 @@ export default function KyrgyzstanRegionsSite() {
     {
       name: 'Таласская область',
       oblast: 'Северо-запад Кыргызстана',
-      population: '≈ 280 тыс',
+      population: '≈ 283,1 тыс.',
       area: '11 400 км²',
       center: 'Талас',
       description: 'Родина великого кыргызского эпоса «Манас». Живописный регион с горами и плодородными долинами у западных рубежей страны.',
@@ -311,7 +276,7 @@ export default function KyrgyzstanRegionsSite() {
       ]
     },
     {
-      name: 'Джалал-Абадская область',
+      name: 'Манас (Джалал-Абадская обл.)',
       oblast: 'Юго-запад Кыргызстана',
       population: '≈ 1,38 млн',
       area: '33 700 км²',
@@ -389,7 +354,7 @@ export default function KyrgyzstanRegionsSite() {
     {
       name: 'Ошская область',
       oblast: 'Юг Кыргызстана',
-      population: '≈ 1.4 млн',
+      population: '≈ 1,44 млн',
       area: '29 200 км²',
       center: 'Ош',
       description: 'Крупнейшая область страны по населению. Ворота в Памир и Ферганскую долину. Многовековая история, разнообразие культур и потрясающая природа от долин до пятитысячников.',
@@ -413,7 +378,7 @@ export default function KyrgyzstanRegionsSite() {
           economy: 'Сельское хозяйство, хлопководство'
         },
         {
-          name: 'Кара-Кулжинский район',
+          name: 'Кара-Кульджинский район',
           population: '≈ 85 тыс',
           area: '5 360 км²',
           info: 'Горный район на востоке Ошской области. Административный центр — Кара-Кулжа. Через перевал Чон-Алай связан с Алайской долиной. В районе развито животноводство — разведение яков, лошадей и овец. Красивые горные пейзажи привлекают туристов.',
@@ -457,7 +422,7 @@ export default function KyrgyzstanRegionsSite() {
     {
       name: 'Баткенская область',
       oblast: 'Юго-запад Кыргызстана',
-      population: '≈ 600 тыс',
+      population: '≈ 606,3 тыс.',
       area: '17 000 км²',
       center: 'Баткен',
       description: 'Молодая область (создана в 1999 г.) с уникальной геополитической ситуацией: включает эксклавы Узбекистана. Богата полезными ископаемыми и горными красотами.',
@@ -490,7 +455,7 @@ export default function KyrgyzstanRegionsSite() {
         }
       ]
     }
-  ]
+  ];
 
   const allDistricts = regions.flatMap(r => r.districts.map(d => ({ ...d, regionName: r.name, regionColor: r.color })));
   const filteredDistricts = searchQuery.trim().length > 1
@@ -517,7 +482,7 @@ export default function KyrgyzstanRegionsSite() {
           />
           {selectedRegion && (
             <button
-              onClick={() => { setSelectedRegion(null); setSelectedDistrict(null); }}
+              onClick={() => { setSelectedRegion(null); setSelectedDistrictIdx(null); }}
               className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-xl text-sm font-medium transition-colors"
             >
               ← Все области
@@ -562,14 +527,14 @@ export default function KyrgyzstanRegionsSite() {
                 Области и районы <span className="text-sky-400">Кыргызстана</span>
               </h1>
               <p className="text-slate-400 text-lg max-w-xl mx-auto">
-                8 регионов · 40 официальных районов · полная информация
+                7 областей · 40 районов · полная информация
               </p>
             </div>
 
             {/* Stats bar */}
             <div className="grid grid-cols-3 gap-4 mb-10">
               {[
-                { label: 'Регионов', value: '8' },
+                { label: 'Областей', value: '7' },
                 { label: 'Районов', value: '40' },
                 { label: 'Население', value: '≈ 7 млн' },
               ].map((s, i) => (
@@ -580,12 +545,109 @@ export default function KyrgyzstanRegionsSite() {
               ))}
             </div>
 
+            {/* ── Столица Бишкек ── */}
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xs font-bold uppercase tracking-widest text-amber-400">Столица</span>
+                <div className="flex-1 h-px bg-amber-400/30" />
+              </div>
+
+              <div
+                className="rounded-3xl border border-amber-400/40 bg-gradient-to-r from-amber-950/60 to-slate-800/60 overflow-hidden cursor-pointer hover:border-amber-400/70 transition-all duration-300"
+                onClick={() => { setBishkekOpen(!bishkekOpen); setBishkekDistrictIdx(null); }}
+              >
+                <div className="h-1.5 bg-gradient-to-r from-amber-400 to-yellow-300" />
+                <div className="p-6">
+                  <div className="flex items-center justify-between flex-wrap gap-4">
+                    <div className="flex items-center gap-5">
+                      <span className="text-5xl">🏙️</span>
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h2 className="text-2xl font-extrabold tracking-tight">Бишкек</h2>
+                          <span className="text-xs bg-amber-400/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded-full font-semibold">Столица КР</span>
+                        </div>
+                        <p className="text-slate-400 text-sm">{bishkek.status}</p>
+                        <div className="flex gap-4 mt-2 text-sm text-slate-300">
+                          <span>👥 {bishkek.population}</span>
+                          <span>🗺️ {bishkek.area}</span>
+                          <span>📅 Основан {bishkek.founded}</span>
+                          <span>🏛️ 4 района</span>
+                        </div>
+                      </div>
+                    </div>
+                    <span className={`text-slate-400 text-xl transition-transform duration-300 ${bishkekOpen ? 'rotate-180' : ''}`}>▼</span>
+                  </div>
+
+                  {bishkekOpen && (
+                    <div className="mt-6 pt-5 border-t border-amber-400/20">
+                      <p className="text-slate-300 text-sm leading-relaxed mb-6 max-w-3xl">{bishkek.description}</p>
+                      <p className="text-xs text-amber-400/70 bg-amber-400/10 border border-amber-400/20 rounded-xl px-3 py-2 mb-6 inline-block">
+                        ⚠️ Районы Бишкека не входят в 40 официальных районов Кыргызстана
+                      </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {bishkek.districts.map((d, idx) => (
+                          <div
+                            key={idx}
+                            onClick={e => { e.stopPropagation(); setBishkekDistrictIdx(bishkekDistrictIdx === idx ? null : idx); }}
+                            className={`rounded-2xl border transition-all duration-300 cursor-pointer ${
+                              bishkekDistrictIdx === idx
+                                ? 'border-amber-400/60 bg-amber-950/40'
+                                : 'border-slate-700/50 bg-slate-800/60 hover:border-amber-400/30'
+                            }`}
+                          >
+                            <div className="h-1 bg-gradient-to-r from-amber-400 to-yellow-300 rounded-t-2xl" />
+                            <div className="p-4">
+                              <div className="flex items-start justify-between mb-2">
+                                <h3 className="text-base font-bold leading-tight pr-2">{d.name}</h3>
+                                <span className={`text-sm text-slate-400 transition-transform duration-300 ${bishkekDistrictIdx === idx ? 'rotate-180' : ''}`}>▼</span>
+                              </div>
+                              <div className="flex gap-3 text-xs text-slate-400">
+                                <span>👥 {d.population}</span>
+                                <span>📐 {d.area}</span>
+                              </div>
+                              {bishkekDistrictIdx === idx && (
+                                <div className="mt-3 pt-3 border-t border-slate-700 space-y-3">
+                                  <p className="text-slate-300 text-sm leading-relaxed">{d.info}</p>
+                                  {d.landmarks && (
+                                    <div>
+                                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Достопримечательности</p>
+                                      <div className="flex flex-wrap gap-1.5">
+                                        {d.landmarks.map((lm, li) => (
+                                          <span key={li} className="text-xs bg-slate-700 text-slate-200 px-2 py-1 rounded-lg">📌 {lm}</span>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                  {d.economy && (
+                                    <div>
+                                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Экономика</p>
+                                      <p className="text-xs text-slate-300">{d.economy}</p>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* ── Области ── */}
+            <div className="flex items-center gap-2 mb-5">
+              <span className="text-xs font-bold uppercase tracking-widest text-sky-400">7 Областей</span>
+              <div className="flex-1 h-px bg-sky-400/30" />
+            </div>
+
             {/* Region Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {regions.map((region, index) => (
                 <div
                   key={index}
-                  onClick={() => { setSelectedRegion(region); setSelectedDistrict(null); }}
+                  onClick={() => { setSelectedRegion(region); setSelectedDistrictIdx(null); }}
                   className="bg-slate-800/60 border border-slate-700/50 rounded-3xl overflow-hidden hover:scale-[1.02] hover:border-slate-500 transition-all duration-300 cursor-pointer group"
                 >
                   <div className={`h-1.5 bg-gradient-to-r ${region.color}`} />
@@ -650,9 +712,9 @@ export default function KyrgyzstanRegionsSite() {
               {selectedRegion.districts.map((district, index) => (
                 <div
                   key={index}
-                  onClick={() => setSelectedDistrict(selectedDistrict?.name === district.name ? null : district)}
+                  onClick={() => setSelectedDistrictIdx(selectedDistrictIdx === index ? null : index)}
                   className={`rounded-2xl border transition-all duration-300 cursor-pointer ${
-                    selectedDistrict?.name === district.name
+                    selectedDistrictIdx === index
                       ? `border-sky-500 bg-sky-950/50`
                       : 'border-slate-700/50 bg-slate-800/60 hover:border-slate-500'
                   }`}
@@ -661,7 +723,7 @@ export default function KyrgyzstanRegionsSite() {
                   <div className="p-5">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="text-lg font-bold leading-tight pr-2">{district.name}</h3>
-                      <span className={`text-sm transition-transform ${selectedDistrict?.name === district.name ? 'rotate-180' : ''}`}>▼</span>
+                      <span className={`text-sm transition-transform duration-300 ${selectedDistrictIdx === index ? 'rotate-180' : ''}`}>▼</span>
                     </div>
                     <div className="flex gap-3 text-xs text-slate-400 mb-2">
                       <span>👥 {district.population}</span>
@@ -669,7 +731,7 @@ export default function KyrgyzstanRegionsSite() {
                     </div>
 
                     {/* Expanded Details */}
-                    {selectedDistrict?.name === district.name && (
+                    {selectedDistrictIdx === index && (
                       <div className="mt-3 pt-3 border-t border-slate-700 space-y-3">
                         <p className="text-slate-300 text-sm leading-relaxed">{district.info}</p>
 
@@ -702,7 +764,7 @@ export default function KyrgyzstanRegionsSite() {
         )}
 
         <footer className="mt-12 text-center text-slate-500 text-sm border-t border-slate-800 pt-6">
-          🇰🇬 Кыргызстан · 8 областей · 40 официальных районов · 2026
+          🇰🇬 Кыргызстан · 7 областей · 40 районов · 2026
         </footer>
       </div>
     </div>
